@@ -57,18 +57,17 @@ public class Simulation {
         for (Rocket rocket : rockets) {
             boolean noFailure = false;
             boolean launch = rocket.launch();
-            boolean land = rocket.land();
             while (!noFailure) {
                 budget += rocket.cost;
                 if (launch) {
                 //successful launch
+                    boolean land = rocket.land();
                     if (land) {
                     //successful land
                         noFailure = true;
                     } else {
-                    // failure land (re-launch and re-land)
+                    // failure land (re-launch)
                         launch = rocket.launch();
-                        land = rocket.land();
                     }
                 } else {
                 //failure launch (re-launch)
