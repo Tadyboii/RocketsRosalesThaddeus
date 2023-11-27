@@ -56,16 +56,23 @@ public class Simulation {
         int budget = 0;
         for (Rocket rocket : rockets) {
             boolean noFailure = false;
-            boolean land = rocket.land();
             boolean launch = rocket.launch();
+            boolean land = rocket.land();
             while (!noFailure) {
-                if (land && launch) {
-                    budget += rocket.cost;
-                    noFailure = true;
+                budget += rocket.cost;
+                if (launch) {
+                //successful launch
+                    if (land) {
+                    //successful land
+                        noFailure = true;
+                    } else {
+                    // failure land (re-launch and re-land)
+                        launch = rocket.launch();
+                        land = rocket.land();
+                    }
                 } else {
-                    land = rocket.land();
+                //failure launch (re-launch)
                     launch = rocket.launch();
-                    budget += rocket.cost;
                 }
 
             }
